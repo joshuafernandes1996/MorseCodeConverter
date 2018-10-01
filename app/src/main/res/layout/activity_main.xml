@@ -20,70 +20,93 @@
 
     <EditText
         android:id="@+id/morseText"
-        android:layout_width="290dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/codebackground"
         android:ems="10"
+        android:focusable="false"
         android:gravity="center"
         android:hint="Morse Code"
         android:inputType="textMultiLine"
-        android:textColor="#fff"
+        android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimary"
         android:textSize="24sp" />
 
     <EditText
         android:id="@+id/messageText"
-        android:layout_width="290dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_alignStart="@+id/morseText"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="91dp"
+        android:layout_marginBottom="180dp"
+        android:background="@drawable/messagebackground"
         android:ems="10"
+        android:enabled="false"
         android:gravity="center"
         android:hint="Message"
         android:inputType="textMultiLine"
         android:textColor="#fff"
         android:textColorHint="@color/colorPrimary"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:enabled="false" />
 
     <Button
         android:id="@+id/dotBtn"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/morseText"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="27dp"
-        android:background="@drawable/dot"
-        android:textColor="#fff" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignStart="@+id/spaceBtn"
+        android:layout_alignTop="@+id/spaceBtn"
+        android:layout_marginStart="81dp"
+        android:background="@drawable/messagebackground"
+        android:text="•"
+        android:textColor="#fff"
+        android:textSize="40sp" />
 
     <Button
         android:id="@+id/dahBtn"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/dotBtn"
-        android:layout_toEndOf="@+id/dotBtn"
-        android:background="@drawable/dash"
-        android:textColor="#fff" />
-
-    <Button
-        android:id="@+id/convertBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignTop="@+id/dotBtn"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="55dp"
-        android:text="Convert"
-        android:textColor="#fff" />
+        android:layout_marginEnd="111dp"
+        android:background="@drawable/messagebackground"
+        android:text="⚊"
+        android:textColor="#fff"
+        android:textSize="40sp" />
 
     <Button
         android:id="@+id/spaceBtn"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignStart="@+id/morseText"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/space"
+        android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/clearbtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignTop="@+id/dotBtn"
-        android:layout_toEndOf="@+id/dahBtn"
-        android:background="@drawable/space" />
+        android:layout_alignEnd="@+id/morseText"
+        android:background="@drawable/ic_keyboard_backspace_black_24dp"
+        android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/playBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="114dp"
+        android:background="@drawable/sound"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
