@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 mMessage = getMessage(mMorseCode, mkeyMap);
                 msg.setText("");
                 msg.setText(msg.getText().toString()+mMessage);
+                
             }
         });
 
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     else if(code.charAt(i)==' '){
-                        
+
                     }
                     try {
                         TimeUnit.MILLISECONDS.sleep(1000);
