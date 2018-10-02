@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_fiber_manual_record_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_content_copy_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,12 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ff6e16" />
-                            <entry key="height" value="1" />
-                            <entry key="outputName" value="dot" />
+                            <entry key="color" value="00a3a6" />
+                            <entry key="outputName" value="copy" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\Josh" />
-                            <entry key="width" value="1" />
                           </map>
                         </option>
                       </PersistentState>

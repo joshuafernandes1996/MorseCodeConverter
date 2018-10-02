@@ -1,23 +1,34 @@
 package com.android.joshua.morsecodeconverter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
+    TextView topMsg,swapMsg;
     String mMorseCode, mMessage;
     EditText msg, morse;
-    Button dot,dah,space,sound,clear;
+    Button dot,dah,space,sound,clear,swap,clear2,clearall;
+    Animation an;
+    String act="";
+    ImageButton copy;
+    final HashMap<String, String> mkeyMap = new HashMap<>();
 
 
     @Override
@@ -27,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         final MediaPlayer[] mdit = {MediaPlayer.create(getApplicationContext(), R.raw.dit)};
         final MediaPlayer[] mdah = {MediaPlayer.create(getApplicationContext(), R.raw.dah)};
         setItem();
-        final HashMap<String, String> mkeyMap = new HashMap<>();
         setAplhaToCode(mkeyMap);
         msg.setEnabled(false);
 
@@ -39,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 mMorseCode = getMorseCode();
                 mMessage = getMessage(mMorseCode, mkeyMap);
                 msg.setText("");
-                msg.setText(msg.getText().toString()+mMessage);
+                msg.setText(msg.getText().toString()+mMessage.toLowerCase());
 
             }
         });
@@ -51,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 mMorseCode = getMorseCode();
                 mMessage = getMessage(mMorseCode, mkeyMap);
                 msg.setText("");
-                msg.setText(msg.getText().toString()+mMessage);
+                msg.setText(msg.getText().toString()+mMessage.toLowerCase());
 
             }
         });
@@ -66,11 +76,14 @@ public class MainActivity extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(morse.getText().toString().equals("")){
+                clear();
+            }
+        });
 
-                }else{
-                    morse.setText(morse.getText().subSequence(0,morse.length()-1));
-                }
+        clear2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clear();
             }
         });
 
@@ -107,6 +120,70 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        swap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                swap.startAnimation(an);
+                if(act.equals("1")){
+                    act="2";
+                    topMsg.setText("Morse Code to English");
+                    morse.setFocusable(false);
+                    morse.setHint("Morse Code");
+                    msg.setHint("Message");
+                    clear2.setVisibility(View.INVISIBLE);
+                    swapMsg.setText("Text to Morse Code");
+                    space.setVisibility(View.VISIBLE);
+                    dot.setVisibility(View.VISIBLE);
+                    dah.setVisibility(View.VISIBLE);
+                    clear.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    act="1";
+                    topMsg.setText("English to Morse Code");
+                    morse.setFocusableInTouchMode(true);
+                    morse.setHint("Message");
+                    msg.setHint("Morse Code");
+                    clear2.setVisibility(View.VISIBLE);
+                    swapMsg.setText("Morse Code to Text");
+                    space.setVisibility(View.INVISIBLE);
+                    dot.setVisibility(View.INVISIBLE);
+                    dah.setVisibility(View.INVISIBLE);
+                    clear.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Message", msg.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(),"Message copied to Clipboard",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        clearall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                morse.setText("");
+                msg.setText("");
+            }
+        });
+    }
+
+    private void clear() {
+        if(morse.getText().toString().equals("")){
+
+        }else{
+            morse.setText(morse.getText().subSequence(0,morse.length()-1));
+            mMorseCode = getMorseCode();
+            mMessage = getMessage(mMorseCode, mkeyMap);
+            msg.setText("");
+            msg.setText(msg.getText().toString()+mMessage.toLowerCase());
+        }
     }
 
     private String getMessage(String mMorseCode, HashMap<String, String> mkeyMap) {
@@ -115,10 +192,10 @@ public class MainActivity extends AppCompatActivity {
         int len=words.length; int i=0;
 
         do {
-            Iterator it = mkeyMap.entrySet().iterator();
+            Iterator<Map.Entry<String, String>> it = mkeyMap.entrySet().iterator();
             while (it.hasNext()) {
 
-                Map.Entry pair = (Map.Entry) it.next();
+                Map.Entry<String, String> pair = it.next();
                 if (pair.getValue().equals(words[i])) {
                     message = message + pair.getKey().toString();
                     break;
@@ -145,6 +222,13 @@ public class MainActivity extends AppCompatActivity {
         space=findViewById(R.id.spaceBtn);
         sound=findViewById(R.id.playBtn);
         clear=findViewById(R.id.clearbtn);
+        swap=findViewById(R.id.swap);
+        copy=findViewById(R.id.copyBtn);
+        topMsg=findViewById(R.id.title);
+        swapMsg=findViewById(R.id.swapMsg);
+        clear2=findViewById(R.id.clear2btn);
+        clearall=findViewById(R.id.clearallbtn);
+        an=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
     }
 
     private void setAplhaToCode(HashMap<String, String> keyMap) {
