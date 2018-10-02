@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final MediaPlayer mdit = MediaPlayer.create(getApplicationContext(), R.raw.dit);
-        final MediaPlayer mdah = MediaPlayer.create(getApplicationContext(), R.raw.dah);
+        final MediaPlayer[] mdit = {MediaPlayer.create(getApplicationContext(), R.raw.dit)};
+        final MediaPlayer[] mdah = {MediaPlayer.create(getApplicationContext(), R.raw.dah)};
         setItem();
         final HashMap<String, String> mkeyMap = new HashMap<>();
         setAplhaToCode(mkeyMap);
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 mMessage = getMessage(mMorseCode, mkeyMap);
                 msg.setText("");
                 msg.setText(msg.getText().toString()+mMessage);
-                
+
             }
         });
 
@@ -80,17 +80,27 @@ public class MainActivity extends AppCompatActivity {
                 String code=morse.getText().toString();
                 for(int i=0;i<code.length();i++){
                     if(code.charAt(i)=='•'){
-                        mdit.start();
+                        if (mdit[0].isPlaying()) {
+                            mdit[0].stop();
+                            mdit[0].release();
+                            mdit[0] = MediaPlayer.create(getApplicationContext(), R.raw.dit);
+                        }
+                        mdit[0].start();
                     }
                     else if(code.charAt(i)=='⚊'){
-                        mdah.start();
+                        if (mdah[0].isPlaying()) {
+                            mdah[0].stop();
+                            mdah[0].release();
+                            mdah[0] = MediaPlayer.create(getApplicationContext(), R.raw.dah);
+                        }
+                        mdah[0].start();
 
                     }
                     else if(code.charAt(i)==' '){
 
                     }
                     try {
-                        TimeUnit.MILLISECONDS.sleep(1000);
+                        TimeUnit.MILLISECONDS.sleep(450);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -116,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
             i++;
         }while(i<len);
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
         return message;
     }
