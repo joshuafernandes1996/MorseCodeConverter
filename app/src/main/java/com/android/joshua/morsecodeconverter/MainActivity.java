@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button dot,dah,space,sound,clear,swap,clear2,clearall;
     Animation an;
     String act="";
+    String ConvertedMsg="";
     ImageButton copy;
     final HashMap<String, String> mkeyMap = new HashMap<>();
 
@@ -86,13 +87,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clear();
+                    msg.setText(morse.getText().toString());
+
+
             }
         });
 
         sound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code=morse.getText().toString();
+                String code="";
+                    code=morse.getText().toString();
+                if(act.equals("2")){
+                    code=msg.getText().toString();
+                }
                 for(int i=0;i<code.length();i++){
                     if(code.charAt(i)=='•'){
                         if (mdit[0].isPlaying()) {
@@ -128,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 swap.startAnimation(an);
                 if(act.equals("1")){
-                    act="2";
+                    act="1";
                     topMsg.setText("Morse Code to English");
                     morse.setFocusable(false);
                     morse.setHint("Morse Code");
@@ -142,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else{
-                    act="1";
+                    act="2";
                     topMsg.setText("English to Morse Code");
                     morse.setFocusableInTouchMode(true);
                     morse.setHint("Message");
@@ -164,17 +172,17 @@ public class MainActivity extends AppCompatActivity {
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                             String Message=morse.getText().toString();
-                            String ConvertedMsg="";
 
-                            for(int i=0;i<Message.length();i++){
-                                ConvertedMsg=ConvertedMsg+getConvertedMsg(Message.charAt(i));
-                                msg.setText(ConvertedMsg);
-                            }
+                                for(int i=0;i<Message.length();i++){
+                                    ConvertedMsg=getConvertedMsg(Message.charAt(i));
+
+                                }
+
+                            msg.setText(msg.getText().toString()+" "+ConvertedMsg);
                         }
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            Toast.makeText(getApplicationContext(), morse.getText().toString(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -204,13 +212,13 @@ public class MainActivity extends AppCompatActivity {
     private String getConvertedMsg(char c) {
         String message = "";
 
-
             Iterator<Map.Entry<String, String>> it = mkeyMap.entrySet().iterator();
             while (it.hasNext()) {
 
                 Map.Entry<String, String> pair = it.next();
-                if (pair.getKey().equals(Character.toUpperCase(c))) {
+                if (pair.getKey().equals(Character.toString(c))) {
                     message = message + pair.getValue();
+                    Toast.makeText(getApplicationContext(), pair.getKey() +"="+c, Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
@@ -286,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         keyMap.put("e", "•");
         keyMap.put("f", "••⚊•");
         keyMap.put("g", "⚊⚊•");
-        keyMap.put("H", "••••");
+        keyMap.put("h", "••••");
         keyMap.put("i", "••");
         keyMap.put("j", "•⚊⚊⚊");
         keyMap.put("k", "⚊•⚊");
