@@ -6,6 +6,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -151,6 +153,31 @@ public class MainActivity extends AppCompatActivity {
                     dot.setVisibility(View.INVISIBLE);
                     dah.setVisibility(View.INVISIBLE);
                     clear.setVisibility(View.INVISIBLE);
+
+                    morse.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            String Message=morse.getText().toString();
+                            String ConvertedMsg="";
+
+                            for(int i=0;i<Message.length();i++){
+                                ConvertedMsg=ConvertedMsg+getConvertedMsg(Message.charAt(i));
+                                msg.setText(ConvertedMsg);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            Toast.makeText(getApplicationContext(), morse.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
             }
         });
@@ -172,6 +199,25 @@ public class MainActivity extends AppCompatActivity {
                 msg.setText("");
             }
         });
+    }
+
+    private String getConvertedMsg(char c) {
+        String message = "";
+
+
+            Iterator<Map.Entry<String, String>> it = mkeyMap.entrySet().iterator();
+            while (it.hasNext()) {
+
+                Map.Entry<String, String> pair = it.next();
+                if (pair.getKey().equals(Character.toUpperCase(c))) {
+                    message = message + pair.getValue();
+                    break;
+                }
+            }
+
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+        return message;
     }
 
     private void clear() {
@@ -233,32 +279,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAplhaToCode(HashMap<String, String> keyMap) {
         //Alphabets
-        keyMap.put("A", "•⚊");
-        keyMap.put("B", "⚊•••");
-        keyMap.put("C", "⚊•⚊•");
-        keyMap.put("D", "⚊••");
-        keyMap.put("E", "•");
-        keyMap.put("F", "••⚊•");
-        keyMap.put("G", "⚊⚊•");
+        keyMap.put("a", "•⚊");
+        keyMap.put("b", "⚊•••");
+        keyMap.put("c", "⚊•⚊•");
+        keyMap.put("d", "⚊••");
+        keyMap.put("e", "•");
+        keyMap.put("f", "••⚊•");
+        keyMap.put("g", "⚊⚊•");
         keyMap.put("H", "••••");
-        keyMap.put("I", "••");
-        keyMap.put("J", "•⚊⚊⚊");
-        keyMap.put("K", "⚊•⚊");
-        keyMap.put("L", "•⚊••");
-        keyMap.put("M", "⚊⚊");
-        keyMap.put("N", "⚊•");
-        keyMap.put("O", "⚊⚊⚊");
-        keyMap.put("P", "•⚊⚊•");
-        keyMap.put("Q", "⚊⚊•⚊");
-        keyMap.put("R", "•⚊•");
-        keyMap.put("S", "•••");
-        keyMap.put("T", "⚊");
-        keyMap.put("U", "••⚊");
-        keyMap.put("V", "•••⚊");
-        keyMap.put("W", "•⚊⚊");
-        keyMap.put("X", "⚊••⚊");
-        keyMap.put("Y", "⚊•⚊⚊");
-        keyMap.put("Z", "⚊⚊••");
+        keyMap.put("i", "••");
+        keyMap.put("j", "•⚊⚊⚊");
+        keyMap.put("k", "⚊•⚊");
+        keyMap.put("l", "•⚊••");
+        keyMap.put("m", "⚊⚊");
+        keyMap.put("n", "⚊•");
+        keyMap.put("o", "⚊⚊⚊");
+        keyMap.put("p", "•⚊⚊•");
+        keyMap.put("q", "⚊⚊•⚊");
+        keyMap.put("r", "•⚊•");
+        keyMap.put("s", "•••");
+        keyMap.put("t", "⚊");
+        keyMap.put("u", "••⚊");
+        keyMap.put("v", "•••⚊");
+        keyMap.put("w", "•⚊⚊");
+        keyMap.put("x", "⚊••⚊");
+        keyMap.put("y", "⚊•⚊⚊");
+        keyMap.put("z", "⚊⚊••");
         //Numbers
         keyMap.put("1", "•⚊⚊⚊⚊");
         keyMap.put("2", "••⚊⚊⚊");
@@ -285,5 +331,7 @@ public class MainActivity extends AppCompatActivity {
         keyMap.put("SOS","•••⚊⚊⚊•••");
         keyMap.put("BK","⚊•••⚊•⚊");
         keyMap.put("CL","⚊•⚊••⚊••");
+        //Space
+        keyMap.put(" "," ");
     }
 }
